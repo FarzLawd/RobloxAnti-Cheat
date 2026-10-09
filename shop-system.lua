@@ -1,21 +1,21 @@
--- Shop System - Sistem Toko dengan GUI & Server Validation
--- ServerScriptService
+-- Shop System - Shop with server-side validation
+-- Place in ServerScriptService
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
--- RemoteEvent untuk beli item (client -> server)
+-- RemoteEvent for buying items (client -> server)
 local buyEvent = Instance.new("RemoteEvent")
 buyEvent.Name = "BuyItemEvent"
 buyEvent.Parent = ReplicatedStorage
 
--- Daftar item toko
+-- Shop item list
 local SHOP_ITEMS = {
 	SpeedBoost = { price = 50, attribute = "WalkSpeed", value = 20 },
 	DoubleJump = { price = 100, attribute = "JumpPower", value = 100 },
 }
 
--- Fungsi beli (validasi di server untuk anti-exploit)
+-- Purchase handler (validated on server to prevent exploits)
 buyEvent.OnServerEvent:Connect(function(player, itemName)
 	local item = SHOP_ITEMS[itemName]
 	if not item then
@@ -28,12 +28,12 @@ buyEvent.OnServerEvent:Connect(function(player, itemName)
 		return
 	end
 
-	-- Cek saldo cukup
+	-- Check if the player has enough coins
 	if coins.Value < item.price then
 		return
 	end
 
-	-- Potong saldo & terapkan efek
+	-- Deduct coins & apply the effect
 	coins.Value = coins.Value - item.price
 
 	local character = player.Character

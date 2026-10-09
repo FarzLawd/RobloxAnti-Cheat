@@ -1,22 +1,22 @@
--- Leaderstats - Sistem Leaderboard & Leaderstats
--- Letakkan di ServerScriptService
+-- Leaderstats - Leaderboard & stats system
+-- Place in ServerScriptService
 
 local Players = game:GetService("Players")
 local DataStoreService = game:GetService("DataStoreService")
 local coinsStore = DataStoreService:GetDataStore("CoinsStore")
 
 Players.PlayerAdded:Connect(function(player)
-	-- Buat folder leaderstats
+	-- Create leaderstats folder
 	local leaderstats = Instance.new("Folder")
 	leaderstats.Name = "leaderstats"
 	leaderstats.Parent = player
 
-	-- Stat Coins
+	-- Coins stat
 	local coins = Instance.new("IntValue")
 	coins.Name = "Coins"
 	coins.Parent = leaderstats
 
-	-- Stat Level
+	-- Level stat
 	local level = Instance.new("IntValue")
 	level.Name = "Level"
 	level.Value = 1
@@ -30,11 +30,11 @@ Players.PlayerAdded:Connect(function(player)
 	if success and savedCoins then
 		coins.Value = savedCoins
 	else
-		coins.Value = 100 -- Nilai awal
+		coins.Value = 100 -- Default starting value
 	end
 end)
 
--- Simpan data saat pemain keluar
+-- Save data when the player leaves
 Players.PlayerRemoving:Connect(function(player)
 	local leaderstats = player:FindFirstChild("leaderstats")
 	if leaderstats then

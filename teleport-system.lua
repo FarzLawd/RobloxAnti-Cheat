@@ -1,21 +1,21 @@
--- Teleport System - Pindah Antar Tempat (Place)
--- ServerScriptService
+-- Teleport System - Move players between Places
+-- Place in ServerScriptService
 
 local TeleportService = game:GetService("TeleportService")
 local Players = game:GetService("Players")
 
--- Konfigurasi place ID
+-- Place ID configuration
 local PLACES = {
-	Lobby = 1234567890,    -- Ganti dengan Place ID lobby
-	Game = 1234567891,     -- Ganti dengan Place ID game
-	Shop = 1234567892,     -- Ganti dengan Place ID shop
+	Lobby = 1234567890,    -- Replace with your lobby Place ID
+	Game = 1234567891,     -- Replace with your game Place ID
+	Shop = 1234567892,     -- Replace with your shop Place ID
 }
 
--- Fungsi teleport
+-- Teleport a single player
 local function teleportPlayer(player, placeName)
 	local placeId = PLACES[placeName]
 	if not placeId then
-		warn("Place tidak ditemukan: " .. tostring(placeName))
+		warn("Place not found: " .. tostring(placeName))
 		return
 	end
 
@@ -24,11 +24,11 @@ local function teleportPlayer(player, placeName)
 	end)
 
 	if not success then
-		warn("Gagal teleport: " .. tostring(errorMessage))
+		warn("Teleport failed: " .. tostring(errorMessage))
 	end
 end
 
--- Teleport semua pemain
+-- Teleport all players
 local function teleportAll(placeName)
 	local players = Players:GetPlayers()
 	for _, player in ipairs(players) do
@@ -36,7 +36,7 @@ local function teleportAll(placeName)
 	end
 end
 
--- Contoh: teleport semua ke Lobby setelah 60 detik
+-- Example: teleport everyone to the Lobby after 60 seconds
 -- task.wait(60)
 -- teleportAll("Lobby")
 
